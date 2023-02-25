@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de compras</title>
+    <style>
+        html{
+            height: 100%;
+            box-sizing: border-box;
+        }
+        body{
+            background: linear-gradient(320deg, #00e7ad, #b3ff80, #9f98ff);
+            text-align: center;
+            font: normal 15pt Arial;
+        }
+
+        section{
+            margin: auto;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 20px;
+            width: 300px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .linhas{
+            line-height: 30px;
+        }
+
+        .botCheck{
+            height: 16px;
+            width: 20px;
+        }
+
+        div{
+            display: inline;
+        }
+        #areaBotoes{
+            display: block;
+            padding: 10px;
+        }
+
+        .areaNome{
+            padding-left: 5px;
+            padding-right: 10px;
+        }
+        input{
+            font: normal 13pt Arial;
+            background-color: rgba(255, 255, 255, 0.4);
+            border: 1px solid black;
+            border-radius: 8px;
+            width: 200px;
+            padding-left: 10px;
+        }
+        .botExcluir{
+            background-color: rgba(255, 255, 255, 0);
+            font: bold 10pt Arial;
+            border: 2px solid red;
+            border-radius: 10px;
+            color: red;
+            transition: 0.2s;
+        }
+        .botExcluir:hover{
+            color: white;
+            background-color: red;
+            transition: 0.2s;
+        }
+
+        #areaBotaoAd{
+            padding-right: 70px;
+        }
+        #botaoAd{
+            background-color: rgba(255, 255, 255, 0);
+            font: bold 13pt Arial;
+            border: 2px solid blue;
+            border-radius: 10px;
+            color: blue;
+            height: 27px;
+            width: 40px;
+            transition: 0.2s;
+        }
+        #botaoAd:hover{
+            color: white;
+            background-color: blue;
+            transition: 0.2s;
+        }
+        #botaoExcLista{
+            background-color: rgba(255, 255, 255, 0);
+            font: bold 10pt Arial;
+            border: 2px solid red;
+            border-radius: 10px;
+            color: red;
+            height: 27px;
+            transition: 0.2s;
+        }
+        #botaoExcLista:hover{
+            background-color: red;
+            color: white;
+        }
+
+
+        footer{
+            padding-top: 15px;
+        }
+        a{
+            color: black;
+            font: italic 14pt Arial;
+            text-decoration: none;
+        }
+        a:hover{
+            text-decoration: underline;
+        }
+    </style>
+
+</head>
+<body onload="adItem()">
+
+    <header>
+        <h1>Lista de compras</h1>
+    </header>
+
+    <section>
+        <div id="lista">
+
+        </div>
+        <div id="areaBotoes">
+            <div id="areaBotaoAd">
+                <button id="botaoAd" onclick="adItem()">+</button>
+            </div>
+            <button id="botaoExcLista" onclick="excluirLista()">Apagar Lista Completa</button>
+        </div>
+    </section>
+
+    <footer>
+        <a href="https://www.instagram.com/luk.bomfim/" target="_blank">
+            &copy; luk.bomfim
+        </a>
+    </footer>
+
+    <script>
+        var lista = document.getElementById('lista')
+        var l = 0
+
+        // FUNÇÃO ADICIONAR ITEM
+        var c = 1
+        function adItem(){
+
+            // CRIAR ELEMENTOS
+            var linha = document.createElement('div')
+            linha.setAttribute('id', `linha${c}`)
+            linha.setAttribute('class', 'linhas')
+
+            var inputCheck = document.createElement('input')
+            inputCheck.setAttribute('type', 'checkbox')
+            inputCheck.setAttribute('class', 'botCheck')
+
+            var divNome = document.createElement('div')
+            divNome.setAttribute('class', 'areaNome')
+            var inputNome = document.createElement('input')
+            inputNome.setAttribute('placeholder', 'Digite o nome do item')
+
+
+            var botaoExcluir = document.createElement('button')
+            botaoExcluir.textContent = 'X'
+            botaoExcluir.setAttribute('class', 'botExcluir')
+            botaoExcluir.setAttribute('id', `${c}`) // CRIANDO UM ID PARA CADA LINHA
+            botaoExcluir.onclick = excluirItem
+                    
+
+            var breakline = document.createElement('br')
+
+            // ADICIONAR NA TELA
+            
+            linha.appendChild(inputCheck)
+            divNome.appendChild(inputNome)
+            linha.appendChild(divNome)
+            linha.appendChild(botaoExcluir)
+            linha.appendChild(breakline)
+            lista.appendChild(linha)
+
+            l++
+            c++
+        }
+
+        function excluirItem() {
+            var id = this.id
+            var linha = document.getElementById(`linha${id}`)
+            linha.innerHTML = ''
+            if (l == 1){
+                adItem()
+            }
+            l--
+        }
+
+        function excluirLista() {
+            var a = confirm('Tem certeza que deseja apagar a lista completa toda?')
+            
+            if (a == true){
+                lista.innerHTML = ''
+                adItem()
+            }
+        }
+    </script>
+</body>
+</html>
